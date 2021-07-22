@@ -19,7 +19,7 @@ This solution supports your fitness regime and habits by allowing you to keep tr
 
 The solution supports two types of exercise:
 
-1. Exercise in one location (i.e. gym session, swim session, game of tennis etc)
+### 1. Exercise in one location (i.e. gym session, swim session, game of tennis etc)
 
 For these, the following data is recorded:
 
@@ -31,7 +31,7 @@ For these, the following data is recorded:
 - Optional link to the exercise in another tracking solution (e.g. Strava)
 - Optional list of subactivities performed and quantity for each. This can be used to track the types of gym exercises performed, or types of swim stroke used, or number of games played. 
 
-2. Exercise over distance (e.g. a run, or a cycle ride)
+### 2. Exercise over distance (e.g. a run, or a cycle ride)
 
 For these, the following data is recorded:
 
@@ -45,3 +45,15 @@ For these, the following data is recorded:
 - Optional maximum speed during exercise
 - Optional average speed during exercise
 
+## Statistics available
+
+The users can view the following statistics about their exercise habits:
+
+- Total time & number of exercises
+- Total time & number of exercises per activity type
+- Total number of exercises per subactivity type
+- Total distance covered
+- Average speed 
+- Maximum speed
+
+These statistics can be viewed over different time periods - e.g. per day, per week, per month or per year. 
