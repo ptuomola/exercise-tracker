@@ -1,8 +1,11 @@
 from .main import main as main_blueprint
 from .auth import auth as auth_blueprint
-from .model import db
+from model.db import db
+from model.user import get_user_by_id
 from os import getenv
 from flask import Flask
+from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect#
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -15,12 +18,26 @@ def create_app():
         uri = uri.replace("postgres://", "postgresql://", 1)
         # rest of connection code using the connection string `uri`
 
+    # initialise SQLAlchemy
     app.config["SQLALCHEMY_DATABASE_URI"] = uri
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
 
+    # initialise blueprints
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
+
+    # initialise flask-login
+    login_manager = LoginManager()
+    login_manager.login_view = "auth.login"
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(userid):
+        return get_user_by_id(int(userid))
+    
+    # initialise CSRF protection
+    csrf = CSRFProtect(app)
 
     return app
