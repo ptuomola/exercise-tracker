@@ -2,6 +2,9 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from model.user import get_user_by_email, insert_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
+from flask_wtf import Form 
+from wtforms.fields import SubmitField, StringField, PasswordField
+from wtforms.validators import Required, Email, Length, EqualTo
 
 auth = Blueprint('auth', __name__)
 
@@ -24,23 +27,35 @@ def login_post():
     login_user(user, remember=remember)
     return redirect(url_for("main.profile"))
 
+class RegistrationForm(Form):
+    name = StringField('Name', [Required(), Length(min=4, max=40)])
+    email = StringField('Email address', [Required(), Email()])
+    password = PasswordField('Password', [
+        Required(), 
+        EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat password')
+    submit = SubmitField('Signup')
 
 @auth.route('/signup')
 def signup():
-    return render_template('signup.html')
+    form = RegistrationForm()
+    return render_template("signup.html", form=form)
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():
-    email = request.form.get('email')
-    name = request.form.get('name')
-    password = request.form.get('password')
+    form = RegistrationForm(request.form)
 
-    if get_user_by_email(email): 
+    if not form.validate():
+        return render_template("signup.html", form = form)
+
+    if get_user_by_email(form.email.data): 
         flash("Email address already exists")
-        return redirect(url_for('auth.signup'))
+        return render_template("signup.html", form = form)
 
-    insert_user(email, name, generate_password_hash(password, method='sha256'))
+    insert_user(form.email.data, form.name.data, generate_password_hash(form.password.data, method='sha256'))
 
+    flash("Thanks for registering! Please log in")
     return redirect(url_for('auth.login'))
 
 @auth.route('/logout')

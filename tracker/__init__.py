@@ -1,11 +1,14 @@
 from .main import main as main_blueprint
 from .auth import auth as auth_blueprint
+from .nav import nav
 from model.db import db
 from model.user import get_user_by_id
 from os import getenv
 from flask import Flask
 from flask_login import LoginManager
-from flask_wtf.csrf import CSRFProtect#
+from flask_wtf.csrf import CSRFProtect
+from flask_bs4  import Bootstrap
+
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -38,6 +41,12 @@ def create_app():
         return get_user_by_id(int(userid))
     
     # initialise CSRF protection
-    csrf = CSRFProtect(app)
+    CSRFProtect(app)
+
+    # initialise Flask-bootstrap
+    Bootstrap(app)
+
+    # initialise Navigation
+    nav.init_app(app)
 
     return app
