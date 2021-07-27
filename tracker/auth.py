@@ -3,28 +3,36 @@ from model.user import get_user_by_email, insert_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user
 from flask_wtf import FlaskForm 
-from wtforms.fields import SubmitField, StringField, PasswordField
+from wtforms.fields import SubmitField, StringField, PasswordField, BooleanField
 from wtforms.validators import Required, Email, Length, EqualTo, ValidationError, Regexp
 
 auth = Blueprint('auth', __name__)
 
+class LoginForm(FlaskForm):
+    email = StringField("Email address", [Required()])
+    password = PasswordField("Password", [Required()])
+    remember = BooleanField("Remember me")
+    submit = SubmitField("Login")
+
 @auth.route('/login')
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', form = form)
 
 @auth.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    remember = True if request.form.get('remember') else False
+    form = LoginForm(request.form)
 
-    user = get_user_by_email(email)
+    if not form.validate():
+        return render_template("login.html", form = form)
 
-    if not user or not check_password_hash(user.password, password):
+    user = get_user_by_email(form.email.data)
+
+    if not user or not check_password_hash(user.password, form.password.data):
         flash('Please check your login details and try again.')
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
-    login_user(user, remember=remember)
+    login_user(user, remember=form.remember.data)
     return redirect(url_for("main.profile"))
 
 class RegistrationForm(FlaskForm):
