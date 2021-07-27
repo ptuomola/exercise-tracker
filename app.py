@@ -1,6 +1,6 @@
-from .main import main as main_blueprint
-from .auth import auth as auth_blueprint
-from .nav import nav
+from blueprints.main import main as main_blueprint
+from blueprints.auth import auth as auth_blueprint
+from blueprints.nav import nav
 from model.db import db
 from model.user import get_user_by_id
 from os import getenv
