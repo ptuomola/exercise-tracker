@@ -14,7 +14,14 @@ config = context.config
 
 # get the database config from environment
 load_dotenv()
-config.set_main_option('sqlalchemy.url', getenv("DATABASE_URL"))
+
+# Work around issue with Heroku Postgres and SQLAlchemy 1.4.x
+uri = getenv("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+    # rest of connection code using the connection string `uri`
+
+config.set_main_option('sqlalchemy.url', uri)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
