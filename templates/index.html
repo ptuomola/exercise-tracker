@@ -1,10 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  Exercise Tracker
-</h1>
-<h2 class="subtitle">
-  Work in progress...
-</h2>
+<header class="jumbotron jumbotron-fluid vertical-center">
+    <div class="container-fluid text-center"> 
+       <h1 class="text-light">The Best Solution for Tracking Your Exercise</h1>
+       <p class="text-light">We help you maximize your performance and become a healthier you</p>
+       <p>
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-primary btn-lg" role="button">Sign up</a>
+        <a href="{{ url_for('auth.login') }}" class="btn btn-secondary btn-lg" role="button">Login</a>
+        </p>
+    </div>
+</header>
 {% endblock %}

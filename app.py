@@ -1,6 +1,7 @@
+from flask_nav import register_renderer
 from blueprints.main import main as main_blueprint
 from blueprints.auth import auth as auth_blueprint
-from blueprints.nav import nav
+from blueprints.nav import MyBootstrapRenderer, nav
 from model.db import db
 from model.user import get_user_by_id
 from os import getenv
@@ -48,5 +49,6 @@ def create_app():
 
     # initialise Navigation
     nav.init_app(app)
+    register_renderer(app, "my_bootstrap_renderer", MyBootstrapRenderer)
 
     return app
