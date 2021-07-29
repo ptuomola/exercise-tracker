@@ -4,7 +4,7 @@ This solution supports your fitness regime and habits by allowing you to keep tr
 
 ## Key features
 
-- User can log in and out, and create new user account
+- [x] User can log in and out, and create new user account
 - User can see a list of all exercise sessions they have recorded, and key statistics about each
 - User can create a new exercise session and log information about it
 - User can modify / correct / delete sessions entered incorrectly / by mistake
