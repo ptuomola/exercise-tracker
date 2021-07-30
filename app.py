@@ -1,6 +1,7 @@
 from flask_nav import register_renderer
 from blueprints.main import main as main_blueprint
 from blueprints.auth import auth as auth_blueprint
+from blueprints.exercises import exercises as exercises_blueprint
 from blueprints.nav import MyBootstrapRenderer, nav
 from model.db import db
 from model.user import get_user_by_id
@@ -23,7 +24,7 @@ def create_app():
         # rest of connection code using the connection string `uri`
 
     # initialise SQLAlchemy
-    app.config["SQLALCHEMY_DATABASE_URI"] = uri
+    app.config["SQLALCHEMY_DATABASE_URI"] = uri 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     db.init_app(app)
@@ -31,6 +32,7 @@ def create_app():
     # initialise blueprints
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
+    app.register_blueprint(exercises_blueprint)
 
     # initialise flask-login
     login_manager = LoginManager()

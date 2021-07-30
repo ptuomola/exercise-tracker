@@ -5,8 +5,8 @@ This solution supports your fitness regime and habits by allowing you to keep tr
 ## Key features
 
 - [x] User can log in and out, and create new user account
-- User can see a list of all exercise sessions they have recorded, and key statistics about each
-- User can create a new exercise session and log information about it
+- [x] User can see a list of all exercise sessions they have recorded, and key statistics about each
+- [x] User can create a new exercise session and log information about it
 - User can modify / correct / delete sessions entered incorrectly / by mistake
 - User can delete their account and all information related to it
 - User can view summary statistics about their exercise habits (see section below)
@@ -24,11 +24,11 @@ The solution supports two types of exercise:
 For these, the following data is recorded:
 
 - Name of activity (e.g. gym / swim / tennis) chosen from predefined list of activities
-- Time and date of exercise
+- [x] Time and date of exercise
 - Total duration of exercise session
 - Optional location of the exercise (link to position on map)
-- Optional description / narrative of the activity entered by the user
-- Optional link to the exercise in another tracking solution (e.g. Strava)
+- [x] Optional description / narrative of the activity entered by the user
+- [x] Optional link to the exercise in another tracking solution (e.g. Strava)
 - Optional list of subactivities performed and quantity for each. This can be used to track the types of gym exercises performed, or types of swim stroke used, or number of games played. 
 
 ### 2. Exercise over distance (e.g. a run, or a cycle ride)
@@ -36,10 +36,10 @@ For these, the following data is recorded:
 For these, the following data is recorded:
 
 - Name of activity (e.g. run / walk / cycle) chosen from predefined list of activities
-- Time and date of exercise
+- [x] Time and date of exercise
 - Total duration of exercise session
-- Optional description / narrative of the activity entered by the user
-- Optional link to the exercise in another tracking solution (e.g. Strava)
+- [x] Optional description / narrative of the activity entered by the user
+- [x] Optional link to the exercise in another tracking solution (e.g. Strava)
 - Optional route of the exercise (link to a route on map)
 - Optional distance covered during exercise
 - Optional maximum speed during exercise

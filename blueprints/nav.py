@@ -10,6 +10,7 @@ def main_nav():
     if current_user.is_authenticated:
         return Navbar(
             View("Exercise Tracker", "main.index"), 
+            View("Exercises", "exercises.list_exercises"),
             View("Profile", "main.profile"), 
             View("Logout", "auth.logout")
         )

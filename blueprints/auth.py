@@ -33,7 +33,7 @@ def login_post():
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
     login_user(user, remember=form.remember.data)
-    return redirect(url_for("main.profile"))
+    return redirect(url_for("exercises.list_exercises"))
 
 class RegistrationForm(FlaskForm):
     name = StringField('Name', [Required(), Length(min=4, max=40)])
