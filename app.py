@@ -2,7 +2,7 @@ from flask_nav import register_renderer
 from blueprints.main import main as main_blueprint
 from blueprints.auth import auth as auth_blueprint
 from blueprints.exercises import exercises as exercises_blueprint
-from blueprints.admin import admin as admin_blueprint
+from blueprints.users import users as users_blueprint
 from blueprints.nav import MyBootstrapRenderer, nav
 from model.db import db
 from model.user import get_user_by_id
@@ -34,7 +34,7 @@ def create_app():
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(main_blueprint)
     app.register_blueprint(exercises_blueprint)
-    app.register_blueprint(admin_blueprint)
+    app.register_blueprint(users_blueprint)
 
     # initialise flask-login
     login_manager = LoginManager()

@@ -1,0 +1,38 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%- extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-left pt-5 mb-3">Profile</h3>
+    <table class="table">
+        <tr>
+            <th scope="row">Email</th>
+            <td>{{ user["email"] }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Name</th>
+            <td>{{ user["name"] }}</td>
+        </tr>
+    </table>
+    <a href="#" class="btn btn-secondary">Edit</a>
+    <button class="btn btn-danger" onclick="confirmDelete({{ user.id }}, {{ current_user.id }})">Delete</a>
+</div>
+
+<script>
+function confirmDelete(userId, currentUserId) {
+    if(userId == currentUserId && !confirm("Are you sure you want to delete your own account?\nThis operation CANNOT be reversed and you will be logged out"))
+        return;
+
+    if (!confirm("Are you sure you want to delete this user?\nThis operation CANNOT be reversed"))
+        return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/user/" + userId, true);
+    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token() }}")
+    xhr.send(null);
+
+    window.location.href = "/"
+}
+</script>
+{% endblock %}

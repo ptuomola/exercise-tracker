@@ -10,7 +10,7 @@ exercises = Blueprint('exercises', __name__)
 
 @exercises.route('/exercises/<int:user_id>')
 @login_required
-def list_exercises(user_id):
+def list(user_id):
     if not current_user.superuser and user_id != current_user.id: 
         abort(401)
 

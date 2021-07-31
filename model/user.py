@@ -35,3 +35,7 @@ def get_user_from_query(result):
 
 def get_all_users():
     return db.session.execute("SELECT * FROM users")
+
+def delete_user_by_id(user_id):
+    db.session.execute("DELETE FROM users WHERE id = :user_id", {"user_id":user_id})
+    db.session.commit()
