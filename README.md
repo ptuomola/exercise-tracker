@@ -11,7 +11,7 @@ This solution supports your fitness regime and habits by allowing you to keep tr
 - User can delete their account and all information related to it
 - User can view summary statistics about their exercise habits (see section below)
 - [x] Superuser can log in and view the list of other users
-- Superuser can view other user's activity data
+- [x] Superuser can view other user's activity data
 - Superuser can view defined activity types, add new activity types and modify existing ones (see below)
 - For each activity type, superuser can view defined subactivity types, add new subactivity types and modify existing ones (see below)
 

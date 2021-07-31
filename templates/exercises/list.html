@@ -5,7 +5,7 @@
     <div class="row mt-3">
         <div class="col">
             <h3 style="display:inline">List of exercises</h3><span style="margin: 0 50px;"></span>
-            <a href="/exercise" class="btn btn-primary">Add exercise</a>
+            User {{ user.email }} {% if user.name %} ({{ user.name }}) {% endif %}
         </div>
     </div>
 
@@ -30,5 +30,6 @@
         {% endfor %}
 
     </table>
+        <a href="/exercise" class="btn btn-primary">Add exercise</a><p>
 </div>
 {% endblock %}

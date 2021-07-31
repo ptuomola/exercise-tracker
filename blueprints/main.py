@@ -6,7 +6,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     if current_user.is_authenticated:
-        return redirect(url_for("exercises.list_exercises"))
+        return redirect(url_for("exercises.list_exercises", user_id = current_user.id))
     else: 
         return render_template('index.html')
 

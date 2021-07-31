@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from model.user import get_user_by_email, insert_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from flask_wtf import FlaskForm 
 from wtforms.fields import SubmitField, StringField, PasswordField, BooleanField
 from wtforms.validators import Required, Email, Length, EqualTo, ValidationError, Regexp
@@ -33,7 +33,7 @@ def login_post():
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
     login_user(user, remember=form.remember.data)
-    return redirect(url_for("exercises.list_exercises"))
+    return redirect(url_for("exercises.list_exercises", user_id = current_user.id))
 
 class RegistrationForm(FlaskForm):
     name = StringField('Name', [Required(), Length(min=4, max=40)])

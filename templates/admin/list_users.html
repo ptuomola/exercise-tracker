@@ -16,6 +16,7 @@
                 <th scope="col">Email</th>
                 <th scope="col">Name</th>
                 <th scope="col">Superuser</th>
+                <th scope="col">View</th>
             </tr>
         </thead>
         {% for user in users %}
@@ -24,6 +25,7 @@
                 <td>{{ user["email"] }}</td>
                 <td>{{ user["name"] }}</td>
                 <td>{{ user["superuser"] }}</td>
+                <td><a href="/exercises/{{ user.id }}">Exercises</a></td>
             </tr>
         {% endfor %}
 

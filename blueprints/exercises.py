@@ -1,17 +1,20 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.fields import TextAreaField, TextField, SubmitField
 from wtforms.validators import Required, Optional, ValidationError
 from model.exercise import insert_exercise, get_exercises_for_user
-
+from model.user import get_user_by_id
 exercises = Blueprint('exercises', __name__)
 
-@exercises.route('/exercises')
+@exercises.route('/exercises/<int:user_id>')
 @login_required
-def list_exercises():
-    return render_template("exercises/list.html", exercises = get_exercises_for_user(current_user.id))
+def list_exercises(user_id):
+    if not current_user.superuser and user_id != current_user.id: 
+        abort(401)
+
+    return render_template("exercises/list.html", user = get_user_by_id(user_id), exercises = get_exercises_for_user(user_id))
 
 class ExerciseForm(FlaskForm):
     start_date = DateField("Start date", [Required()])
