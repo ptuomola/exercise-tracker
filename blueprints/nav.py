@@ -7,14 +7,22 @@ from dominate import tags
 nav = Nav()
 
 def main_nav():
-    if current_user.is_authenticated:
+    if current_user.superuser: 
         return Navbar(
             View("Exercise Tracker", "main.index"), 
-            View("Exercises", "exercises.list_exercises"),
+            View("Users", "admin.list_users"),
             View("Profile", "main.profile"), 
             View("Logout", "auth.logout")
         )
-    else:
+
+    if current_user.is_authenticated:
+        return Navbar(
+            View("Exercise Tracker", "main.index"), 
+            View("My exercises", "exercises.list_exercises"),
+            View("Profile", "main.profile"), 
+            View("Logout", "auth.logout")
+        )
+    else: 
         return Navbar(
             View("Exercise Tracker", "main.index"), 
             View("Login", "auth.login"), 
@@ -23,6 +31,7 @@ def main_nav():
 
 nav.register_element("main_nav", main_nav)
 
+# Custom rendered to fix the colors for the navbar
 class MyBootstrapRenderer(BootstrapRenderer):
     def visit_Navbar(self, node):
         nav_root = BootstrapRenderer.visit_Navbar(self, node)
