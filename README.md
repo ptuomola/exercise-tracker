@@ -49,8 +49,8 @@ For these, the following data is recorded:
 
 The users can view the following statistics about their exercise habits:
 
-- Total time & number of exercises
-- Total time & number of exercises per activity type
+- [x] Total time & number of exercises
+- [x] Total time & number of exercises per activity type
 - Total number of exercises per subactivity type
 - Total distance covered
 - Average speed 
