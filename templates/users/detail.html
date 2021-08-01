@@ -15,8 +15,8 @@
             <td>{{ user["name"] }}</td>
         </tr>
     </table>
-    <a href="#" class="btn btn-secondary">Edit</a>
-    <button class="btn btn-danger" onclick="confirmDelete({{ user.id }}, {{ current_user.id }})">Delete</a>
+    <button class="btn btn-danger" onclick="confirmDelete({{ user.id }}, {{ current_user.id }})">Delete</button>
+    <a href="/users" class="btn btn-primary">Back to list</a>
 </div>
 
 <script>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row mt-3">
+        <div class="col">
+            <h3 style="display:inline">List of activities configured</h3>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Type</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+        {% for activity in activities %}
+            <tr>
+                <td>{{ activity["id"] }}</td>
+                <td>{{ activity["description"] }}</td>
+                <td>{{ activity_types[activity["activity_type"]] }}</td>
+                <td><a href="/activity/{{ activity.id }}">Detail</a>
+            </tr>
+        {% endfor %}
+
+    </table>
+    <a href="/activity" class="btn btn-primary">Add activity</a><p>
+</div>
+{% endblock %}

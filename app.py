@@ -3,6 +3,7 @@ from blueprints.main import main as main_blueprint
 from blueprints.auth import auth as auth_blueprint
 from blueprints.exercises import exercises as exercises_blueprint
 from blueprints.users import users as users_blueprint
+from blueprints.activities import activities as activities_blueprint
 from blueprints.nav import MyBootstrapRenderer, nav
 from model.db import db
 from model.user import get_user_by_id
@@ -15,8 +16,8 @@ from flask_bs4  import Bootstrap
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
-
-    app.config['SECRET_KEY'] = 'f2a76a5a966c46d0b08f4965327a89d6'
+   
+    app.secret_key = getenv("SECRET_KEY")
 
     # Work around issue with Heroku Postgres and SQLAlchemy 1.4.x
     uri = getenv("DATABASE_URL")  # or other relevant config var
@@ -27,7 +28,6 @@ def create_app():
     # initialise SQLAlchemy
     app.config["SQLALCHEMY_DATABASE_URI"] = uri 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
     db.init_app(app)
 
     # initialise blueprints
@@ -35,6 +35,7 @@ def create_app():
     app.register_blueprint(main_blueprint)
     app.register_blueprint(exercises_blueprint)
     app.register_blueprint(users_blueprint)
+    app.register_blueprint(activities_blueprint)
 
     # initialise flask-login
     login_manager = LoginManager()

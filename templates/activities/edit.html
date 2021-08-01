@@ -1,0 +1,26 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%- extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-center pt-5">Edit activity</h3>
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6">
+                <table class="table">
+                    <tr>
+                        <th scope="row">ID</th>
+                        <td>{{ activity.id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Activity Type</th>
+                        <td>{{ activity_types[activity.activity_type]}}</td>
+                    </tr>
+                </table>            
+                {{form|render_form()}}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

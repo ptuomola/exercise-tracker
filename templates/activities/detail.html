@@ -1,0 +1,25 @@
+{% import "bootstrap/wtf.html" as wtf %}
+
+{%- extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h3 class="text-left pt-5 mb-3">Activity</h3>
+    <table class="table">
+        <tr>
+            <th scope="row">ID</th>
+            <td>{{ activity["id"] }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Description</th>
+            <td>{{ activity["description"] }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Type</th>
+            <td>{{ activity_types[activity["activity_type"]] }}</td>
+        </tr>
+    </table>
+    <a href="/activity/{{ activity.id }}/edit" class="btn btn-secondary">Edit</a>
+    <a href="/activities" class="btn btn-primary">Back to list</a>
+</div>
+{% endblock %}

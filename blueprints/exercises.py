@@ -51,6 +51,6 @@ def exercise_post():
 
     insert_exercise(form.start_date.data, form.start_time.data, form.end_date.data, form.end_time.data, form.desription.data, form.external_url.data)
 
-    return redirect(url_for("exercises.list_exercises"))
+    return redirect(url_for("exercises.list"))
 
 

@@ -2,7 +2,6 @@ from flask_nav import Nav
 from flask_nav.elements import Navbar, View
 from flask_login import current_user
 from flask_bs4.nav import BootstrapRenderer
-from dominate import tags
 
 nav = Nav()
 
@@ -19,6 +18,7 @@ def main_nav():
         return Navbar(
             View("Exercise Tracker", "main.index"), 
             View("Users", "users.list"),
+            View("Activities", "activities.list"),
             View("Profile", "users.detail", user_id = current_user.id), 
             View("Logout", "auth.logout")
         )
