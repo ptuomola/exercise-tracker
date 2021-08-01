@@ -23,9 +23,9 @@ The solution supports two types of exercise:
 
 For these, the following data is recorded:
 
-- Name of activity (e.g. gym / swim / tennis) chosen from predefined list of activities
+- [x] Name of activity (e.g. gym / swim / tennis) chosen from predefined list of activities
 - [x] Time and date of exercise
-- Total duration of exercise session
+- [x] Total duration of exercise session
 - Optional location of the exercise (link to position on map)
 - [x] Optional description / narrative of the activity entered by the user
 - [x] Optional link to the exercise in another tracking solution (e.g. Strava)
@@ -35,9 +35,9 @@ For these, the following data is recorded:
 
 For these, the following data is recorded:
 
-- Name of activity (e.g. run / walk / cycle) chosen from predefined list of activities
+- [x] Name of activity (e.g. run / walk / cycle) chosen from predefined list of activities
 - [x] Time and date of exercise
-- Total duration of exercise session
+- [x] Total duration of exercise session
 - [x] Optional description / narrative of the activity entered by the user
 - [x] Optional link to the exercise in another tracking solution (e.g. Strava)
 - Optional route of the exercise (link to a route on map)

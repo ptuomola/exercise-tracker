@@ -4,6 +4,9 @@ from flask_login import current_user
 def get_all_activities():
     return db.session.execute("SELECT * FROM activities ORDER BY id ASC")
 
+def get_all_activities_as_tuples():
+    return [(act.id, act.description) for act in get_all_activities()]
+    
 def get_activity_by_id(activity_id):
     return db.session.execute("SELECT * FROM activities WHERE id = :activity_id", {"activity_id":activity_id}).first()
 

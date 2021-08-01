@@ -12,6 +12,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th scope="col">Activity</th>
                 <th scope="col">Start date</th>
                 <th scope="col">Start time</th>
                 <th scope="col">End date</th>
@@ -21,6 +22,7 @@
         </thead>
         {% for exercise in exercises %}
             <tr>
+                <td>{{ exercise["activity_description"] }}</td>
                 <td>{{ exercise["start_date"] }}</td>
                 <td>{{ exercise["start_time"] }}</td>
                 <td>{{ exercise["end_date"] }}</td>

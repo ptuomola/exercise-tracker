@@ -2,8 +2,9 @@ from flask import Blueprint, render_template, request, redirect, url_for, abort
 from flask_login import login_required, current_user
 from flask_wtf import FlaskForm
 from wtforms.fields.html5 import DateField, TimeField
-from wtforms.fields import TextAreaField, TextField, SubmitField
+from wtforms.fields import TextAreaField, TextField, SubmitField, SelectField
 from wtforms.validators import Required, Optional, ValidationError
+from model.activity import get_all_activities_as_tuples
 from model.exercise import insert_exercise, get_exercises_for_user
 from model.user import get_user_by_id
 exercises = Blueprint('exercises', __name__)
@@ -17,17 +18,16 @@ def list(user_id):
     return render_template("exercises/list.html", user = get_user_by_id(user_id), exercises = get_exercises_for_user(user_id))
 
 class ExerciseForm(FlaskForm):
+    activity_id = SelectField("Activity", coerce=int)
     start_date = DateField("Start date", [Required()])
     start_time = TimeField("Start time", [Optional()])
-    end_date = DateField("End date", [Optional(), ])
+    end_date = DateField("End date", [Optional()])
     end_time = TimeField("End time", [Optional()])
     desription = TextAreaField("Description")
     external_url = TextField("External URL link")
     submit = SubmitField("Record exercise")
 
     def validate_end_date(form, field):
-        print("in validator")
-
         if form.end_date.data < form.start_date.data:
             raise ValidationError("End date cannot be before start date")
 
@@ -40,17 +40,20 @@ class ExerciseForm(FlaskForm):
 @exercises.route('/exercise')
 def exercise():
     form = ExerciseForm()
+    form.activity_id.choices = get_all_activities_as_tuples()
+
     return render_template('exercises/create.html', form = form)
 
 @exercises.route('/exercise', methods=['POST'])
 def exercise_post():
     form = ExerciseForm(request.form)
+    form.activity_id.choices = get_all_activities_as_tuples()
 
     if not form.validate():
         return render_template("exercises/create.html", form = form)
 
-    insert_exercise(form.start_date.data, form.start_time.data, form.end_date.data, form.end_time.data, form.desription.data, form.external_url.data)
+    insert_exercise(form.activity_id.data, form.start_date.data, form.start_time.data, form.end_date.data, form.end_time.data, form.desription.data, form.external_url.data)
 
-    return redirect(url_for("exercises.list"))
+    return redirect(url_for("exercises.list", user_id = current_user.id))
 
 
