@@ -1,5 +1,15 @@
 # exercise-tracker
 
+Sovellus löytyy Herokusta osoitteesta https://pt-exercise-tracker.herokuapp.com/
+
+Superuser-tilin käyttäjänimi on "admin" ja salasana "Admin1234!"
+Muita käyttäjiä voi luoda "Signup"-toiminnon avulla
+
+Alla sovellukselle määritetyt vaatimukset. Vaatimukset jotka on merkitty [x] on jo toteutettu, loput toteutetaan seuraavaan välitarkastukseen mennessä. 
+Tiedossa olevat parannukset / bugit on listattu Github-projektin "Issues"-osiossa
+
+## Overview
+
 This solution supports your fitness regime and habits by allowing you to keep track of your exercise sessions - e.g. running routes/times, gym visits/sets, swim sessions/laps. It also provides helpful statistics of exercises to ensure you stay on track to improve your fitness. 
 
 ## Key features
