@@ -2,7 +2,7 @@
 
 Sovellus löytyy Herokusta osoitteesta https://pt-exercise-tracker.herokuapp.com/
 
-Superuser-tilin käyttäjänimi on "admin" ja salasana "Admin1234!"
+Superuser-tilin email on "admin" ja salasana "Admin1234!"
 Muita käyttäjiä voi luoda "Signup"-toiminnon avulla
 
 Sovelluksen rakenne on MVC-tyyppinen ja lähdekoodi jaettu seuraavasti:
