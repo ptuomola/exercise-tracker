@@ -5,6 +5,14 @@ Sovellus löytyy Herokusta osoitteesta https://pt-exercise-tracker.herokuapp.com
 Superuser-tilin käyttäjänimi on "admin" ja salasana "Admin1234!"
 Muita käyttäjiä voi luoda "Signup"-toiminnon avulla
 
+Sovelluksen rakenne on MVC-tyyppinen ja lähdekoodi jaettu seuraavasti:
+
+- Kansio "alembic" - Model - tietokannan luominen (DDL), muutoksenhallinta Alembic-työkalua käyttäen
+- Kansio "model" - Model - tietokannan käyttö raakaa SQLää käyttäen toteutettuna
+- Kansio "blueprints" - Controller - toteutettu Flaskin Blueprint-konseptia käyttäen
+- Kansio "templates" - Views - toteutettu Flaskin Jinja2 template engineä käyttäen
+- Kansio "static" - Vieweissä käytetyt staattiset assetit (eli kuvat tms)
+
 Alla sovellukselle määritetyt vaatimukset. Vaatimukset jotka on merkitty [x] on jo toteutettu, loput toteutetaan seuraavaan välitarkastukseen mennessä. 
 Tiedossa olevat parannukset / bugit on listattu Github-projektin "Issues"-osiossa
 
