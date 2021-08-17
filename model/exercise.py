@@ -21,3 +21,6 @@ def get_exercises_by_activity(user_id):
                                  FROM activities a, exercises e
                                  WHERE e.activity_id = a.id AND e.user_id = :user_id
                                  GROUP BY a.description""", {"user_id": user_id })
+
+def get_exercise_by_id(exercise_id):
+    return db.session.execute("SELECT * FROM exercises WHERE id = :exercise_id", {"exercise_id":exercise_id}).first()

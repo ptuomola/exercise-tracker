@@ -4,9 +4,11 @@ from flask_wtf import FlaskForm
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.fields import TextAreaField, TextField, SubmitField, SelectField
 from wtforms.validators import Required, Optional, ValidationError
-from model.activity import get_all_activities_as_tuples
-from model.exercise import insert_exercise, get_exercises_for_user
+from model.activity import get_activity_by_id, get_all_activities_as_tuples
+from model.exercise import insert_exercise, get_exercises_for_user, get_exercise_by_id
 from model.user import get_user_by_id
+from blueprints.activities import activity_types
+
 exercises = Blueprint('exercises', __name__)
 
 @exercises.route('/exercises/<int:user_id>')
@@ -55,5 +57,19 @@ def exercise_post():
     insert_exercise(form.activity_id.data, form.start_date.data, form.start_time.data, form.end_date.data, form.end_time.data, form.desription.data, form.external_url.data)
 
     return redirect(url_for("exercises.list", user_id = current_user.id))
+
+
+@login_required
+@exercises.route("/exercise/<int:exercise_id>")
+def detail(exercise_id):
+    exercise = get_exercise_by_id(exercise_id)
+
+    # only superuser can view exercises of others
+    if not current_user.superuser and exercise.user_id != current_user.id: 
+        abort(401)
+    
+    return render_template("exercises/detail.html", 
+                            exercise = exercise, 
+                            activity = get_activity_by_id(exercise.activity_id))
 
 
