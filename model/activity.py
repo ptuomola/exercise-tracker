@@ -20,3 +20,21 @@ def update_activity(activity_id, description):
     db.session.execute("UPDATE activities SET description = :description WHERE id = :activity_id", {"description": description, "activity_id": activity_id})
     db.session.commit()
 
+def get_subactivities_by_activity_id(activity_id):
+    return db.session.execute("SELECT * FROM subactivities WHERE activity_id = :activity_id", {"activity_id":activity_id})
+
+def insert_subactivity(activity_id, description):
+    db.session.execute("""INSERT INTO subactivities (activity_id, description) 
+                                         VALUES (:activity_id, :description)"""
+                    , {"activity_id": activity_id, "description" : description})
+    db.session.commit()    
+
+def update_subactivity(subactivity_id, description):
+    db.session.execute("UPDATE subactivities SET description = :description WHERE id = :subactivity_id", {"description": description, "subactivity_id": subactivity_id})
+    db.session.commit()
+
+def get_subactivity_by_id(subactivity_id):
+    return db.session.execute("SELECT * FROM subactivities WHERE id = :subactivity_id", {"subactivity_id":subactivity_id}).first()
+
+
+

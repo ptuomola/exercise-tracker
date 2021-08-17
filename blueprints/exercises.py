@@ -19,8 +19,8 @@ def list(user_id):
 
 class ExerciseForm(FlaskForm):
     activity_id = SelectField("Activity", coerce=int)
-    start_date = DateField("Start date", [Required()])
-    start_time = TimeField("Start time", [Optional()])
+    start_date = DateField("Start date", validators=[Required()])
+    start_time = TimeField("Start time", validators=[Optional()])
     end_date = DateField("End date", [Optional()])
     end_time = TimeField("End time", [Optional()])
     desription = TextAreaField("Description")

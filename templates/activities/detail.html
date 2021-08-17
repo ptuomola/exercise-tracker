@@ -19,7 +19,19 @@
             <td>{{ activity_types[activity["activity_type"]] }}</td>
         </tr>
     </table>
-    <a href="/activity/{{ activity.id }}/edit" class="btn btn-secondary">Edit</a>
-    <a href="/activities" class="btn btn-primary">Back to list</a>
+    <h4 class="pt-2">Subactivities defined</h4>
+    <table class="table">
+        {% for subactivity in subactivities %}
+            <tr>
+                <td>{{ subactivity["description"] }}</td>
+                <td><a href="/activity/{{ activity.id }}/subactivity/{{ subactivity['id'] }}/edit">Edit</a>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href="/activity/{{ activity.id }}/subactivity" class="btn btn-secondary">Add a subactivity</a>
+    <div class="pt-2">        
+        <a href="/activity/{{ activity.id }}/edit" class="btn btn-secondary">Edit activity</a>
+        <a href="/activities" class="btn btn-primary">Back to list</a>
+    </div>
 </div>
 {% endblock %}

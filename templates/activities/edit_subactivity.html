@@ -4,19 +4,18 @@
 
 {% block content %}
 <div class="container">
-    <h3 class="text-center pt-5">Edit activity</h3>
+    <h3 class="text-center pt-5">Edit subactivity</h3>
     <div class="container">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-6">
                 <table class="table">
                     <tr>
                         <th scope="row">ID</th>
-                        <td>{{ activity.id }}</td>
+                        <td>{{ subactivity.id }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Activity Type</th>
-                        <td>{{ activity_types[activity.activity_type]}}</td>
-                    </tr>
+                        <th scope="row">Parent activity</th>
+                        <td>{{ activity.description }}</td>
                 </table>            
                 {{ wtf.quick_form(form, button_map = {"cancel":"secondary", "submit": "primary"}) }}
             </div>
