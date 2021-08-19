@@ -37,7 +37,26 @@
     </table>
     <div class="pt-2">        
         <a href="/exercise/{{ exercise.id }}/edit" class="btn btn-secondary">Edit exercise</a>
+        <button class="btn btn-danger" onclick="confirmDelete({{ exercise.id }})">Delete</button>
         <a href="/exercises/{{ current_user.id }}" class="btn btn-primary">Back to list</a>
     </div>
 </div>
+
+
+<script>
+function confirmDelete(exerciseId) {
+    if (!confirm("Are you sure you want to delete this exercise session?\nThis operation CANNOT be reversed"))
+        return;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/exercise/" + exerciseId, true);
+    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token() }}")
+    xhr.send(null);
+
+    window.location.href = "/"
+}
+</script>
+
 {% endblock %}
+
+

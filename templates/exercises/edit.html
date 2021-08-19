@@ -8,6 +8,16 @@
     <div class="container">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-6">
+                <table class="table">
+                    <tr>
+                        <th scope="row">ID</th>
+                        <td>{{ exercise.id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Activity</th>
+                        <td>{{ activity.description }}</td>
+                    </tr>
+                </table>   
                 {{ wtf.quick_form(form, button_map = {"cancel":"secondary", "submit": "primary"}) }}
             </div>
         </div>

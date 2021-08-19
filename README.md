@@ -25,7 +25,7 @@ This solution supports your fitness regime and habits by allowing you to keep tr
 - [x] User can log in and out, and create new user account
 - [x] User can see a list of all exercise sessions they have recorded, and key statistics about each
 - [x] User can create a new exercise session and log information about it
-- User can modify / correct / delete sessions entered incorrectly / by mistake
+- [x] User can modify / correct / delete sessions entered incorrectly / by mistake
 - [x] User can delete their account and all information related to it
 - User can view summary statistics about their exercise habits (see section below)
 - [x] Superuser can log in and view the list of other users

@@ -21,7 +21,7 @@
         {% for exercise in exercises %}
             <tr>
                 <td>{{ exercise["activity_description"] }}</td>
-                <td>{{ exercise["start_date"] }} {{ exercise["start_time"] }}</td>
+                <td>{{ exercise["start_date"] }} {{ exercise["start_time"] or '' }}</td>
                 <td>{{ exercise["description"] }}</td>
                 <td><a href="/exercise/{{ exercise['id'] }}">Detail</a></td>
             </tr>
