@@ -15,7 +15,7 @@
                 <th scope="col">Type</th>
                 <th scope="col">When</th>
                 <th scope="col">Description</th>
-                <th scope="col">View</th>
+                <th scope="col" colspan="2">View</th>
             </tr>
         </thead>
         {% for exercise in exercises %}
@@ -24,6 +24,11 @@
                 <td>{{ exercise["start_date"] }} {{ exercise["start_time"] or '' }}</td>
                 <td>{{ exercise["description"] }}</td>
                 <td><a href="/exercise/{{ exercise['id'] }}">Detail</a></td>
+                {% if exercise["activity_type"] == 2 %}
+                    <td><a href="/exercise/{{ exercise['id'] }}/subactivities">Subactivities</a></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
             </tr>
         {% endfor %}
 

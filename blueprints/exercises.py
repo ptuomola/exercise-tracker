@@ -6,7 +6,7 @@ from wtforms.fields.html5 import DateField, TimeField
 from wtforms.fields import TextAreaField, TextField, SubmitField, SelectField
 from wtforms.validators import Required, Optional, ValidationError
 from model.activity import get_activity_by_id, get_all_activities_as_tuples
-from model.exercise import delete_exercise_by_id, insert_exercise, get_exercises_for_user, get_exercise_by_id, update_exercise
+from model.exercise import delete_exercise_by_id, insert_exercise, get_exercises_for_user, get_exercise_by_id, update_exercise, get_subactivities_for_exercise
 from model.user import get_user_by_id
 from blueprints.activities import activity_types
 from datetime import date, datetime
@@ -64,7 +64,12 @@ def exercise_post():
     if not form.validate():
         return render_template("exercises/create.html", form = form)
 
-    insert_exercise(form.activity_id.data, form.start_date.data, form.start_time.data, form.end_date.data, form.end_time.data, form.description.data, form.external_url.data)
+    exercise_id = insert_exercise(form.activity_id.data, form.start_date.data, form.start_time.data, form.end_date.data, form.end_time.data, form.description.data, form.external_url.data)
+
+    activity = get_activity_by_id(form.activity_id.data)
+
+    if activity.activity_type == 2: 
+        return redirect(url_for("exercises.subactivities", exercise_id = exercise_id))
 
     return redirect(url_for("exercises.list", user_id = current_user.id))
 
@@ -155,3 +160,10 @@ def edit_exercise_post(exercise_id):
 
     return redirect(url_for("exercises.detail",  exercise_id = exercise_id))
 
+
+@login_required
+@exercises.route('/exercise/<int:exercise_id>/subactivities')
+def subactivities(exercise_id):
+    return render_template('exercises/subactivities.html', 
+                            subactivities = get_subactivities_for_exercise(exercise_id), 
+                            current_user = current_user)
