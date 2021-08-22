@@ -27,7 +27,7 @@ This solution supports your fitness regime and habits by allowing you to keep tr
 - [x] User can create a new exercise session and log information about it
 - [x] User can modify / correct / delete sessions entered incorrectly / by mistake
 - [x] User can delete their account and all information related to it
-- User can view summary statistics about their exercise habits (see section below)
+- [x] User can view summary statistics about their exercise habits (see section below)
 - [x] Superuser can log in and view the list of other users
 - [x] Superuser can view other user's activity data
 - [x] Superuser can view defined activity types, add new activity types and modify existing ones (see below)
@@ -47,7 +47,7 @@ For these, the following data is recorded:
 - Optional location of the exercise (link to position on map)
 - [x] Optional description / narrative of the activity entered by the user
 - [x] Optional link to the exercise in another tracking solution (e.g. Strava)
-- Optional list of subactivities performed and quantity for each. This can be used to track the types of gym exercises performed, or types of swim stroke used, or number of games played. 
+- [x] Optional list of subactivities performed and quantity for each. This can be used to track the types of gym exercises performed, or types of swim stroke used, or number of games played. 
 
 ### 2. Exercise over distance (e.g. a run, or a cycle ride)
 
@@ -74,4 +74,4 @@ The users can view the following statistics about their exercise habits:
 - Average speed 
 - Maximum speed
 
-These statistics can be viewed over different time periods - e.g. per day, per week, per month or per year. 
+These statistics can be viewed over different time periods - e.g. last week, last month or last year. 

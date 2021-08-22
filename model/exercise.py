@@ -47,4 +47,29 @@ def update_exercise(exercise_id, start_date, start_time, end_date, end_time, des
     db.session.commit()
 
 def get_subactivities_for_exercise(exercise_id):
-    db.session.execute("SELECT * FROM EXERCISE_SUBACTIVITIES WHERE exercise_id = :exercise_id", {"exercise_id": exercise_id})
+    return db.session.execute("""SELECT esa.*, s.description as description
+                          FROM exercise_subactivities esa, subactivities s
+                          WHERE exercise_id = :exercise_id
+                          AND esa.subactivity_id = s.id""", {"exercise_id": exercise_id})
+
+def insert_exercise_subactivity(exercise_id, subactivity_id, amount):
+    retval = db.session.execute("""INSERT INTO exercise_subactivities (exercise_id, subactivity_id, count)
+                          VALUES (:exercise_id, :subactivity_id, :count)
+                          RETURNING id""", 
+                          {"exercise_id":exercise_id, "subactivity_id":subactivity_id, "count":amount})
+    db.session.commit()
+    return retval.first()[0]
+
+def delete_exercise_subactivity_by_id(subactivity_id):
+    db.session.execute("DELETE FROM EXERCISE_SUBACTIVITIES WHERE id = :subactivity_id", {"subactivity_id": subactivity_id})
+    db.session.commit()
+
+def get_subactivity_exercise_by_id(subactivity_id):
+    return db.session.execute("SELECT * FROM exercise_subactivities WHERE id = :subactivity_id", {"subactivity_id": subactivity_id}).first()
+
+def update_exercise_subactivity(id, subactivity_id, amount):
+    db.session.execute("""UPDATE exercise_subactivities 
+                          SET subactivity_id = :subactivity_id, count=:count
+                          WHERE id = :id""", 
+                          {"subactivity_id": subactivity_id, "id": id, "count": amount})
+    db.session.commit()

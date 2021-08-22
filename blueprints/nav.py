@@ -17,7 +17,7 @@ def main_nav():
     if current_user.superuser: 
         return Navbar(
             View("Exercise Tracker", "main.index"), 
-            View("My exercises", "exercises.list", user_id = current_user.id),
+            View("My exercises", "exercises.list_exercises", user_id = current_user.id),
             View("Users", "users.list"),
             View("Activities", "activities.list"),
             View("Profile", "users.detail", user_id = current_user.id), 
@@ -26,7 +26,7 @@ def main_nav():
 
     return Navbar(
         View("Exercise Tracker", "main.index"), 
-        View("My exercises", "exercises.list", user_id = current_user.id),
+        View("My exercises", "exercises.list_exercises", user_id = current_user.id),
         View("Profile", "users.detail", user_id = current_user.id), 
         View("Logout", "auth.logout")
     )

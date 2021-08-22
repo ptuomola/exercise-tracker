@@ -5,8 +5,8 @@ from sqlalchemy.sql.operators import notbetween_op
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.fields import TextAreaField, TextField, SubmitField, SelectField
 from wtforms.validators import Required, Optional, ValidationError
-from model.activity import get_activity_by_id, get_all_activities_as_tuples
-from model.exercise import delete_exercise_by_id, insert_exercise, get_exercises_for_user, get_exercise_by_id, update_exercise, get_subactivities_for_exercise
+from model.activity import get_activity_by_id, get_all_activities_as_tuples, get_subactivities_by_activity_id, get_subactivity_by_id
+from model.exercise import delete_exercise_by_id, delete_exercise_subactivity_by_id, get_subactivity_exercise_by_id, insert_exercise, get_exercises_for_user, get_exercise_by_id, update_exercise, get_subactivities_for_exercise, insert_exercise_subactivity, update_exercise_subactivity
 from model.user import get_user_by_id
 from blueprints.activities import activity_types
 from datetime import date, datetime
@@ -15,7 +15,7 @@ exercises = Blueprint('exercises', __name__)
 
 @exercises.route('/exercises/<int:user_id>')
 @login_required
-def list(user_id):
+def list_exercises(user_id):
     if not current_user.superuser and user_id != current_user.id: 
         abort(401)
 
@@ -59,7 +59,7 @@ def exercise_post():
     form.activity_id.choices = get_all_activities_as_tuples()
 
     if form.cancel.data:
-        return redirect(url_for("exercises.list", user_id = current_user.id))
+        return redirect(url_for("exercises.list_exercises", user_id = current_user.id))
 
     if not form.validate():
         return render_template("exercises/create.html", form = form)
@@ -71,7 +71,7 @@ def exercise_post():
     if activity.activity_type == 2: 
         return redirect(url_for("exercises.subactivities", exercise_id = exercise_id))
 
-    return redirect(url_for("exercises.list", user_id = current_user.id))
+    return redirect(url_for("exercises.list_exercises", user_id = current_user.id))
 
 
 @login_required
@@ -164,6 +164,63 @@ def edit_exercise_post(exercise_id):
 @login_required
 @exercises.route('/exercise/<int:exercise_id>/subactivities')
 def subactivities(exercise_id):
+    exercise = get_exercise_by_id(exercise_id)
+
+    # only superuser can view / modify exercises of other users
+    print(current_user.id)
+    print(exercise.user_id)
+    if not current_user.superuser and exercise.user_id != current_user.id:
+        abort(401)
+
     return render_template('exercises/subactivities.html', 
                             subactivities = get_subactivities_for_exercise(exercise_id), 
+                            subactivity_types = list(get_subactivities_by_activity_id(exercise.activity_id)),
+                            exercise = exercise,
                             current_user = current_user)
+
+@login_required
+@exercises.route('/exercise/<int:exercise_id>/subactivity', methods=["POST"])
+def post_subactivity(exercise_id):
+    exercise = get_exercise_by_id(exercise_id)
+
+    # only superuser can view / modify exercises of other users
+    if not current_user.superuser and exercise.user_id != current_user.id:
+        abort(401)
+
+    return str(insert_exercise_subactivity(exercise.id, request.form["id"], request.form["amount"]))
+
+@login_required
+@exercises.route('/exercise/<int:exercise_id>/subactivity/<int:subactivity_id>', methods=["DELETE"])
+def delete_subactivity(exercise_id, subactivity_id):
+    exercise = get_exercise_by_id(exercise_id)
+
+    # only superuser can view / modify exercises of other users
+    if not current_user.superuser and exercise.user_id != current_user.id:
+        abort(401)
+
+    # check that the subactivity belongs to this exercise
+    subactivity = get_subactivity_exercise_by_id(subactivity_id)
+
+    if subactivity.exercise_id != exercise_id:
+        abort(404)
+    
+    delete_exercise_subactivity_by_id(subactivity_id)
+    return "OK"
+
+@login_required
+@exercises.route('/exercise/<int:exercise_id>/subactivity/<int:subactivity_id>', methods=["PUT"])
+def update_subactivity(exercise_id, subactivity_id):
+    exercise = get_exercise_by_id(exercise_id)
+
+    # only superuser can view / modify exercises of other users
+    if not current_user.superuser and exercise.user_id != current_user.id:
+        abort(401)
+
+    # check that the subactivity belongs to this exercise
+    subactivity = get_subactivity_exercise_by_id(subactivity_id)
+
+    if subactivity.exercise_id != exercise_id:
+        abort(404)
+    
+    update_exercise_subactivity(subactivity_id, request.form["id"], request.form["amount"])
+    return "OK"
