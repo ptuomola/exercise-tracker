@@ -1,7 +1,3 @@
-
--- DATABASE SCHEMA FOR EXERCISE TRACKER SOLUTION
--- THIS IS ONLY FOR DOCUMENTATION PURPOSES
--- The actual schema is managed by Alembic with files in alembic/versions
 --
 -- PostgreSQL database dump
 --
@@ -69,6 +65,42 @@ CREATE TABLE public.alembic_version (
 
 
 ALTER TABLE public.alembic_version OWNER TO ptuomola;
+
+--
+-- Name: exercise_subactivities; Type: TABLE; Schema: public; Owner: ptuomola
+--
+
+CREATE TABLE public.exercise_subactivities (
+    id integer NOT NULL,
+    exercise_id integer NOT NULL,
+    subactivity_id integer NOT NULL,
+    count integer
+);
+
+
+ALTER TABLE public.exercise_subactivities OWNER TO ptuomola;
+
+--
+-- Name: exercise_subactivities_id_seq; Type: SEQUENCE; Schema: public; Owner: ptuomola
+--
+
+CREATE SEQUENCE public.exercise_subactivities_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.exercise_subactivities_id_seq OWNER TO ptuomola;
+
+--
+-- Name: exercise_subactivities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ptuomola
+--
+
+ALTER SEQUENCE public.exercise_subactivities_id_seq OWNED BY public.exercise_subactivities.id;
+
 
 --
 -- Name: exercises; Type: TABLE; Schema: public; Owner: ptuomola
@@ -191,6 +223,13 @@ ALTER TABLE ONLY public.activities ALTER COLUMN id SET DEFAULT nextval('public.a
 
 
 --
+-- Name: exercise_subactivities id; Type: DEFAULT; Schema: public; Owner: ptuomola
+--
+
+ALTER TABLE ONLY public.exercise_subactivities ALTER COLUMN id SET DEFAULT nextval('public.exercise_subactivities_id_seq'::regclass);
+
+
+--
 -- Name: exercises id; Type: DEFAULT; Schema: public; Owner: ptuomola
 --
 
@@ -228,6 +267,14 @@ ALTER TABLE ONLY public.alembic_version
 
 
 --
+-- Name: exercise_subactivities exercise_subactivities_pkey; Type: CONSTRAINT; Schema: public; Owner: ptuomola
+--
+
+ALTER TABLE ONLY public.exercise_subactivities
+    ADD CONSTRAINT exercise_subactivities_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: exercises exercises_pkey; Type: CONSTRAINT; Schema: public; Owner: ptuomola
 --
 
@@ -249,6 +296,22 @@ ALTER TABLE ONLY public.subactivities
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: exercise_subactivities exercise_subactivities_exercise_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ptuomola
+--
+
+ALTER TABLE ONLY public.exercise_subactivities
+    ADD CONSTRAINT exercise_subactivities_exercise_id_fkey FOREIGN KEY (exercise_id) REFERENCES public.exercises(id) ON DELETE CASCADE;
+
+
+--
+-- Name: exercise_subactivities exercise_subactivities_subactivity_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: ptuomola
+--
+
+ALTER TABLE ONLY public.exercise_subactivities
+    ADD CONSTRAINT exercise_subactivities_subactivity_id_fkey FOREIGN KEY (subactivity_id) REFERENCES public.subactivities(id) ON DELETE CASCADE;
 
 
 --
