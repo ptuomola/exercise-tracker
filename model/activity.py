@@ -23,6 +23,9 @@ def update_activity(activity_id, description):
 def get_subactivities_by_activity_id(activity_id):
     return db.session.execute("SELECT * FROM subactivities WHERE activity_id = :activity_id", {"activity_id":activity_id})
 
+def get_num_subactivities_by_activity_id(activity_id):
+    return db.session.execute("SELECT COUNT(1) FROM subactivities WHERE activity_id = :activity_id", {"activity_id":activity_id}).first()[0]
+
 def insert_subactivity(activity_id, description):
     db.session.execute("""INSERT INTO subactivities (activity_id, description) 
                                          VALUES (:activity_id, :description)"""

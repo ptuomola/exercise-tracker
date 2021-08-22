@@ -11,7 +11,8 @@ def insert_exercise(activity_id, start_date, start_time, end_date, end_time, des
     return retval.first()[0]
 
 def get_exercises_for_user(user_id):
-    return db.session.execute("""SELECT e.*, a.description AS activity_description, a.activity_type AS activity_type
+    return db.session.execute("""SELECT e.*, a.description AS activity_description, a.activity_type AS activity_type,
+                                        (SELECT COUNT(1) FROM subactivities sa WHERE sa.activity_id = e.activity_id) as num_subactivity_types 
                                  FROM exercises e, activities a 
                                  WHERE user_id = :user_id AND e.activity_id = a.id
                                  ORDER BY start_date DESC, start_time DESC""", {"user_id": user_id})

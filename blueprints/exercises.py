@@ -5,7 +5,7 @@ from sqlalchemy.sql.operators import notbetween_op
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.fields import TextAreaField, TextField, SubmitField, SelectField
 from wtforms.validators import Required, Optional, ValidationError
-from model.activity import get_activity_by_id, get_all_activities_as_tuples, get_subactivities_by_activity_id, get_subactivity_by_id
+from model.activity import get_activity_by_id, get_all_activities_as_tuples, get_num_subactivities_by_activity_id, get_subactivities_by_activity_id, get_subactivity_by_id
 from model.exercise import delete_exercise_by_id, delete_exercise_subactivity_by_id, get_subactivity_exercise_by_id, insert_exercise, get_exercises_for_user, get_exercise_by_id, update_exercise, get_subactivities_for_exercise, insert_exercise_subactivity, update_exercise_subactivity
 from model.user import get_user_by_id
 from blueprints.activities import activity_types
@@ -68,7 +68,7 @@ def exercise_post():
 
     activity = get_activity_by_id(form.activity_id.data)
 
-    if activity.activity_type == 2: 
+    if activity.activity_type == 2 and get_num_subactivities_by_activity_id(activity.id) != 0: 
         return redirect(url_for("exercises.subactivities", exercise_id = exercise_id))
 
     return redirect(url_for("exercises.list_exercises", user_id = current_user.id))

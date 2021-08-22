@@ -24,7 +24,7 @@
                 <td>{{ exercise["start_date"] }} {{ exercise["start_time"] or '' }}</td>
                 <td>{{ exercise["description"] }}</td>
                 <td><a href="/exercise/{{ exercise['id'] }}">Detail</a></td>
-                {% if exercise["activity_type"] == 2 %}
+                {% if exercise["num_subactivity_types"] != 0 %}
                     <td><a href="/exercise/{{ exercise['id'] }}/subactivities">Subactivities</a></td>
                 {% else %}
                     <td></td>

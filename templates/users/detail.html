@@ -16,7 +16,11 @@
         </tr>
     </table>
     <button class="btn btn-danger" onclick="confirmDelete({{ user.id }}, {{ current_user.id }})">Delete</button>
-    <a href="/users" class="btn btn-primary">Back to list</a>
+    {% if current_user.superuser %}
+        <a href="/users" class="btn btn-primary">Back to list</a>
+    {% else %}
+        <a href="/" class="btn btn-primary">Back to home</a>
+    {% endif %}
 </div>
 
 <script>
