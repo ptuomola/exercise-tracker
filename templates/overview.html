@@ -8,22 +8,29 @@
             User {{ user.email }} {% if user.name %} ({{ user.name }}) {% endif %}
         </div>
     </div>
-    <div class="row justify-content-center align-items-center">
+    <div class="row">
         <div class="col-md-6 mb-3">
-            <table class="table">
-                <tr>
-                    <th scope="row">Total number of exercise sessions</th>
-                    <td>{{ tot_exercises }}</td>
-                </tr>
-                {% for activity in exercises_by_activity %}
-                <tr>
-                    <td>{{ activity[0] }}</td>
-                    <td>{{ activity[1] }}</td>
-                </tr>
-                {% endfor %}
-            </table>
-            <a href="/exercise" class="btn btn-primary">Add exercise session</a><p>
+                <table class="table">
+                    <tr>
+                        <th scope="row">Total number of exercise sessions ({{ period }})</th>
+                        <td>{{ tot_exercises }}</td>
+                    </tr>
+                    {% for activity in exercises_by_activity %}
+                    <tr>
+                        <td>{{ activity[0] }}</td>
+                        <td>{{ activity[1] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <a href="/exercise" class="btn btn-primary">Add exercise session</a><p>
         </div>
-    </div>         
+        <div class="col-md-6">
+            View summary for:<p>
+            <div><a href="?days=7">Last week</a></div>
+            <div><a href="?days=30">Last month</a></div>
+            <div><a href="?days=365">Last year</a></div>
+            <div><a href="/">All time</a></div>
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -74,4 +74,4 @@ The users can view the following statistics about their exercise habits:
 - Average speed 
 - Maximum speed
 
-These statistics can be viewed over different time periods - e.g. last week, last month or last year. 
+[x] These statistics can be viewed over different time periods - e.g. last week, last month or last year. 
