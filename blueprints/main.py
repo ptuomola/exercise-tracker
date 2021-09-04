@@ -1,10 +1,10 @@
 from flask import Blueprint, render_template, request
 from flask_login import current_user
 from model.exercise import (
+    get_duration_of_exercise,
     get_total_num_exercises,
-    get_exercises_by_activity,
-    get_total_num_exercises_in_days,
-    get_exercises_by_activity_in_days,
+    get_exercises_by_activity, 
+    get_subactivities_by_exercise
 )
 
 main = Blueprint("main", __name__)
@@ -17,18 +17,17 @@ def index():
 
     if "days" in request.args:
         days = request.args["days"]
-        tot_exercises = get_total_num_exercises_in_days(current_user.id, days)
-        exercises_by_activity = get_exercises_by_activity_in_days(current_user.id, days)
         period = "last " + days + " days"
     else:
-        tot_exercises = get_total_num_exercises(current_user.id)
-        exercises_by_activity = get_exercises_by_activity(current_user.id)
+        days = None
         period = "all time"
 
     return render_template(
         "overview.html",
-        tot_exercises=tot_exercises,
-        exercises_by_activity=exercises_by_activity,
+        tot_exercises=get_total_num_exercises(current_user.id, days),
+        exercises_by_activity=get_exercises_by_activity(current_user.id, days),
         user=current_user,
+        tot_duration = get_duration_of_exercise(current_user.id, days),
+        subactivities = get_subactivities_by_exercise(current_user.id, days),
         period=period,
     )

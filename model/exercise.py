@@ -40,40 +40,53 @@ def get_exercises_for_user(user_id):
     )
 
 
-def get_total_num_exercises(user_id):
-    return db.session.execute(
-        "SELECT COUNT(1) FROM exercises WHERE user_id = :user_id", {"user_id": user_id}
-    ).first()[0]
+def get_total_num_exercises(user_id, days = None):
+    sql = "SELECT COUNT(1) FROM exercises WHERE user_id = :user_id"
+
+    if days:
+        sql = sql + " AND start_date >= (current_date - :days)"
+        return db.session.execute(sql, {"user_id": user_id, "days": int(days)}).first()[0]
+    else:
+        return db.session.execute(sql, {"user_id": user_id}).first()[0]
 
 
-def get_total_num_exercises_in_days(user_id, days):
-    return db.session.execute(
-        """SELECT COUNT(1)
-                  FROM exercises
-                  WHERE user_id = :user_id AND start_date >= (current_date - :days)""",
-        {"user_id": user_id, "days": int(days)},
-    ).first()[0]
+def get_exercises_by_activity(user_id, days = None):
+    sql = """SELECT a.description, COUNT(1)
+                                 FROM activities a, exercises e
+                                 WHERE e.activity_id = a.id AND e.user_id = :user_id"""
+    if days:
+        sql = sql + " AND start_date >= (current_date - :days) GROUP BY a.description"
+        return db.session.execute(sql, {"user_id": user_id, "days": int(days)})
+    else:
+        sql = sql + " GROUP BY a.description"
+        return db.session.execute(sql, {"user_id": user_id})
+
+def get_subactivities_by_exercise(user_id, days = None):
+    sql = """SELECT a.description, sa.description, SUM(esa.count)
+                                 FROM activities a, exercises e, exercise_subactivities esa, subactivities sa
+                                 WHERE e.activity_id = a.id AND e.user_id = :user_id
+                                 AND esa.exercise_id = e.id AND esa.subactivity_id = sa.id"""
+    if days:
+        sql = sql + " AND start_date >= (current_date - :days) GROUP BY a.description, sa.description"
+        return db.session.execute(sql, {"user_id": user_id, "days": int(days)})
+    else:
+        sql = sql + " GROUP BY a.description, sa.description"
+        return db.session.execute(sql, {"user_id": user_id})    
 
 
-def get_exercises_by_activity(user_id):
-    return db.session.execute(
-        """SELECT a.description, COUNT(1)
+def get_duration_of_exercise(user_id, days = None):
+    sql = """SELECT sum((end_date + end_time) - (start_date + start_time))
                                  FROM activities a, exercises e
                                  WHERE e.activity_id = a.id AND e.user_id = :user_id
-                                 GROUP BY a.description""",
-        {"user_id": user_id},
-    )
+                                 AND start_time IS NOT NULL
+                                 AND end_date IS NOT NULL
+                                 AND end_time IS NOT NULL"""
 
-
-def get_exercises_by_activity_in_days(user_id, days):
-    return db.session.execute(
-        """SELECT a.description, COUNT(1)
-                                 FROM activities a, exercises e
-                                 WHERE e.activity_id = a.id AND e.user_id = :user_id
-                                 AND start_date >= (current_date - :days)
-                                 GROUP BY a.description""",
-        {"user_id": user_id, "days": int(days)},
-    )
+    if days:
+        sql = sql + " AND start_date >= (current_date - :days)"
+        return db.session.execute(sql, {"user_id": user_id, "days": int(days)}).first()[0]
+    else:
+        return db.session.execute(sql, {"user_id": user_id}).first()[0]
 
 
 def get_exercise_by_id(exercise_id):
