@@ -15,6 +15,13 @@ def get_activity_by_id(activity_id):
         "SELECT * FROM activities WHERE id = :activity_id", {"activity_id": activity_id}
     ).first()
 
+def get_activity_by_description(description):
+    return db.session.execute(
+        """SELECT * FROM activities
+                   WHERE UPPER(description) = UPPER(:description)""",
+        {"description": description},
+    ).first()
+
 
 def insert_activity(description, activity_type):
     db.session.execute(

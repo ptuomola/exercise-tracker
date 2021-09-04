@@ -3,8 +3,10 @@ from flask_login import current_user, login_required
 from flask_wtf import FlaskForm
 from wtforms.fields import SubmitField, TextField
 from wtforms.fields.core import SelectField
-from wtforms.validators import Required
+from wtforms.fields.simple import HiddenField
+from wtforms.validators import Required, ValidationError
 from model.activity import (
+    get_activity_by_description,
     get_activity_by_id,
     get_all_activities,
     get_subactivities_by_activity_id,
@@ -41,6 +43,10 @@ class CreateActivityForm(FlaskForm):
     submit = SubmitField("Create activity")
     cancel = SubmitField(label="Cancel", render_kw={"formnovalidate": True})
 
+    def validate_description(_form, field):
+        if get_activity_by_description(field.data):
+            raise ValidationError("Activity already exists")
+
 
 @login_required
 @activities.route("/activity")
@@ -63,14 +69,18 @@ def activity_post():
     form = CreateActivityForm(request.form)
 
     if form.cancel.data:
-        return redirect(url_for("activities.list_activities", activity_types=activity_types))
+        return redirect(
+            url_for("activities.list_activities", activity_types=activity_types)
+        )
 
     if not form.validate():
         return render_template("activities/create.html", form=form)
 
     insert_activity(form.description.data, form.activity_type.data)
 
-    return redirect(url_for("activities.list_activities", activity_types=activity_types))
+    return redirect(
+        url_for("activities.list_activities", activity_types=activity_types)
+    )
 
 
 @login_required
@@ -89,9 +99,15 @@ def detail(activity_id):
 
 
 class UpdateActivityForm(FlaskForm):
+    activity_id = HiddenField("Activity ID")
     description = TextField("Description", [Required()])
     submit = SubmitField("Update activity")
     cancel = SubmitField(label="Cancel", render_kw={"formnovalidate": True})
+
+    def validate_description(form, field):
+        other_activity = get_activity_by_description(field.data)
+        if form.activity_id.data != str(other_activity.id):
+            raise ValidationError("Activity already exists")
 
 
 @login_required
@@ -104,7 +120,8 @@ def edit_activity(activity_id):
     form = UpdateActivityForm()
     this_activity = get_activity_by_id(activity_id)
 
-    form.description.data = activity["description"]
+    form.activity_id.data = activity_id
+    form.description.data = this_activity["description"]
 
     return render_template(
         "activities/edit.html",
@@ -125,7 +142,11 @@ def edit_activity_post(activity_id):
 
     if form.cancel.data:
         return redirect(
-            url_for("activities.detail", activity_id=activity_id, activity=activity)
+            url_for(
+                "activities.detail",
+                activity_id=activity_id,
+                activity=get_activity_by_id(activity_id),
+            )
         )
 
     if not form.validate():
@@ -139,7 +160,11 @@ def edit_activity_post(activity_id):
     update_activity(activity_id, form.description.data)
 
     return redirect(
-        url_for("activities.detail", activity_id=activity_id, activity=activity)
+        url_for(
+            "activities.detail",
+            activity_id=activity_id,
+            activity=get_activity_by_id(activity_id),
+        )
     )
 
 
