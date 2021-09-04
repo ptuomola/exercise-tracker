@@ -34,9 +34,14 @@ function confirmDelete(userId, currentUserId) {
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", "/user/" + userId, true);
     xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token() }}")
-    xhr.send(null);
 
-    window.location.href = "/"
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            window.location.replace("/users")
+        }
+    }
+
+    xhr.send(null);
 }
 </script>
 {% endblock %}
