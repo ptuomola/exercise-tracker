@@ -13,8 +13,7 @@ Sovelluksen rakenne on MVC-tyyppinen ja lähdekoodi jaettu seuraavasti:
 - Kansio "templates" - Views - toteutettu Flaskin Jinja2 template engineä käyttäen
 - Kansio "static" - Vieweissä käytetyt staattiset assetit (eli kuvat tms)
 
-Alla sovellukselle määritetyt vaatimukset. Vaatimukset jotka on merkitty [x] on jo toteutettu, loput toteutetaan seuraavaan välitarkastukseen mennessä. 
-Tiedossa olevat parannukset / bugit on listattu Github-projektin "Issues"-osiossa
+Alla sovellukselle määritetyt vaatimukset. Tiedossa olevat parannukset / bugit on listattu Github-projektin "Issues"-osiossa
 
 ## Overview
 
@@ -44,7 +43,6 @@ For these, the following data is recorded:
 - [x] Name of activity (e.g. gym / swim / tennis) chosen from predefined list of activities
 - [x] Time and date of exercise
 - [x] Total duration of exercise session
-- Optional location of the exercise (link to position on map)
 - [x] Optional description / narrative of the activity entered by the user
 - [x] Optional link to the exercise in another tracking solution (e.g. Strava)
 - [x] Optional list of subactivities performed and quantity for each. This can be used to track the types of gym exercises performed, or types of swim stroke used, or number of games played. 
@@ -58,10 +56,6 @@ For these, the following data is recorded:
 - [x] Total duration of exercise session
 - [x] Optional description / narrative of the activity entered by the user
 - [x] Optional link to the exercise in another tracking solution (e.g. Strava)
-- Optional route of the exercise (link to a route on map)
-- Optional distance covered during exercise
-- Optional maximum speed during exercise
-- Optional average speed during exercise
 
 ## Statistics available
 
@@ -70,8 +64,6 @@ The users can view the following statistics about their exercise habits:
 - [x] Total time & number of exercises
 - [x] Total time & number of exercises per activity type
 - Total number of exercises per subactivity type
-- Total distance covered
-- Average speed 
-- Maximum speed
+- Total duration of exercise sessions
 
 [x] These statistics can be viewed over different time periods - e.g. last week, last month or last year. 

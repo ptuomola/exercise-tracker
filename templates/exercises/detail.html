@@ -34,6 +34,10 @@
             <th scope="row">End time</th>
             <td>{{ exercise["end_time"] }}</td>
         </tr>
+        <tr>
+            <th scope="row">External URL</th>
+            <td>{{ exercise["external_url"] }}</td>
+        </tr>
     </table>
     <div class="pt-2">        
         <a href="/exercise/{{ exercise.id }}/edit" class="btn btn-secondary">Edit exercise</a>

@@ -12,17 +12,31 @@ class User(UserMixin):
 
 
 def insert_user(email, name, password):
-    db.session.execute("INSERT INTO users (email, name, password) VALUES ( :email, :name, :password )", {
-                       "email": email, "password": password, "name": name})
+    db.session.execute(
+        "INSERT INTO users (email, name, password) VALUES ( :email, :name, :password )",
+        {"email": email, "password": password, "name": name},
+    )
     db.session.commit()
 
 
 def get_user_by_id(id):
-    return get_user_from_query(db.session.execute("SELECT id, email, name, password, superuser FROM users WHERE id = :id", {"id": id}))
+    return get_user_from_query(
+        db.session.execute(
+            "SELECT id, email, name, password, superuser FROM users WHERE id = :id",
+            {"id": id},
+        )
+    )
 
 
 def get_user_by_email(email):
-    return get_user_from_query(db.session.execute("SELECT id, email, name, password, superuser FROM users WHERE UPPER(email) = UPPER(:email)", {"email": email}))
+    return get_user_from_query(
+        db.session.execute(
+            """SELECT id, email, name, password, superuser
+                 FROM users
+                WHERE UPPER(email) = UPPER(:email)""",
+            {"email": email},
+        )
+    )
 
 
 def get_user_from_query(result):
@@ -33,9 +47,11 @@ def get_user_from_query(result):
 
     return User(**row)
 
+
 def get_all_users():
     return db.session.execute("SELECT * FROM users")
 
+
 def delete_user_by_id(user_id):
-    db.session.execute("DELETE FROM users WHERE id = :user_id", {"user_id":user_id})
+    db.session.execute("DELETE FROM users WHERE id = :user_id", {"user_id": user_id})
     db.session.commit()
