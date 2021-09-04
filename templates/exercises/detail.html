@@ -55,9 +55,14 @@ function confirmDelete(exerciseId) {
     var xhr = new XMLHttpRequest();
     xhr.open("DELETE", "/exercise/" + exerciseId, true);
     xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token() }}")
-    xhr.send(null);
 
-    window.location.href = "/"
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            window.location.replace("/exercises/{{ current_user.id }}")
+        }
+    }
+
+    xhr.send();
 }
 </script>
 
