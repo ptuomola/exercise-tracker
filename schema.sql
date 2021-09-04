@@ -5,6 +5,10 @@
 -- Dumped from database version 13.4
 -- Dumped by pg_dump version 13.4
 
+-- THIS FILE IS INCLUDED FOR DOCUMENTATION PURPOSES ONLY
+-- THE ACTUAL DDL IS PERFORMED BY ALEMBIC 
+-- See scripts in alembic/versions
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;

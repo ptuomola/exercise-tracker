@@ -66,4 +66,4 @@ The users can view the following statistics about their exercise habits:
 - Total number of exercises per subactivity type
 - Total duration of exercise sessions
 
-[x] These statistics can be viewed over different time periods - e.g. last week, last month or last year. 
+These statistics can be viewed over different time periods - e.g. last week, last month or last year. 
