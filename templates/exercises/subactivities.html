@@ -165,7 +165,7 @@ $(document).ready(function(){
 		var empty = false;
 		var input = $(this).parents("tr").find('input[type="number"]');
         input.each(function(){
-			if(!$(this).val()){
+			if(!$(this).val() || $(this).val() < 0){
 				$(this).addClass("error");
 				empty = true;
 			} else{
