@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, abort
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, logout_user
 from model.user import get_all_users, get_user_by_id, delete_user_by_id
 
 users = Blueprint("users", __name__)
@@ -34,4 +34,8 @@ def delete(user_id):
         abort(401)
 
     delete_user_by_id(user_id)
+
+    if user_id == current_user.id:
+        logout_user()
+
     return "OK"
