@@ -224,7 +224,7 @@ def edit_subactivity(activity_id, subactivity_id):
     form = UpdateSubactivityForm()
     this_subactivity = get_subactivity_by_id(subactivity_id)
 
-    form.description.data = subactivity["description"]
+    form.description.data = this_subactivity["description"]
 
     return render_template(
         "activities/edit_subactivity.html",

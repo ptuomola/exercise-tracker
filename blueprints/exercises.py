@@ -5,16 +5,24 @@ from flask_wtf import FlaskForm
 from wtforms.fields import SelectField, SubmitField, TextAreaField, TextField
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import Optional, Required, ValidationError
-from model.activity import (get_activity_by_id, get_all_activities_as_tuples,
-                            get_num_subactivities_by_activity_id,
-                            get_subactivities_by_activity_id)
-from model.exercise import (delete_exercise_by_id,
-                            delete_exercise_subactivity_by_id,
-                            get_exercise_by_id, get_exercises_for_user,
-                            get_subactivities_for_exercise,
-                            get_subactivity_exercise_by_id, insert_exercise,
-                            insert_exercise_subactivity, update_exercise,
-                            update_exercise_subactivity)
+from model.activity import (
+    get_activity_by_id,
+    get_all_activities_as_tuples,
+    get_num_subactivities_by_activity_id,
+    get_subactivities_by_activity_id,
+)
+from model.exercise import (
+    delete_exercise_by_id,
+    delete_exercise_subactivity_by_id,
+    get_exercise_by_id,
+    get_exercises_for_user,
+    get_subactivities_for_exercise,
+    get_subactivity_exercise_by_id,
+    insert_exercise,
+    insert_exercise_subactivity,
+    update_exercise,
+    update_exercise_subactivity,
+)
 from model.user import get_user_by_id
 
 exercises = Blueprint("exercises", __name__)
@@ -156,13 +164,11 @@ class UpdateExerciseForm(FlaskForm):
         if form.end_date.data > date.today():
             raise ValidationError("End date cannot be in the future")
 
-
     def validate_end_time(form, _field):
         if (form.end_date.data == form.start_date.data) and (
             form.end_time.data < form.start_time.data
         ):
             raise ValidationError("Exercise cannot end before it starts")
-        
 
 
 @login_required
@@ -237,7 +243,9 @@ def subactivities(exercise_id):
     return render_template(
         "exercises/subactivities.html",
         subactivities=get_subactivities_for_exercise(exercise_id),
-        subactivity_types=list(get_subactivities_by_activity_id(this_exercise.activity_id)),
+        subactivity_types=list(
+            get_subactivities_by_activity_id(this_exercise.activity_id)
+        ),
         exercise=this_exercise,
         current_user=current_user,
     )

@@ -19,6 +19,7 @@
             <td>{{ activity_types[activity["activity_type"]] }}</td>
         </tr>
     </table>
+    {% if activity["activity_type"] == 2 %}
     <h4 class="pt-2">Subactivities defined</h4>
     <table class="table">
         {% for subactivity in subactivities %}
@@ -29,6 +30,7 @@
         {% endfor %}
     </table>
     <a href="/activity/{{ activity.id }}/subactivity" class="btn btn-secondary">Add a subactivity</a>
+    {% endif %}
     <div class="pt-2">        
         <a href="/activity/{{ activity.id }}/edit" class="btn btn-secondary">Edit activity</a>
         <a href="/activities" class="btn btn-primary">Back to list</a>
