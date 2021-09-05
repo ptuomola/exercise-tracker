@@ -32,7 +32,7 @@
             {% endfor %}
         </tbody>
     </table>
-    <a href="/exercises/{{ current_user.id }}" class="btn btn-primary">Done</a><p>
+    <a href="/exercises/{{ current_user.id }}" id="doneButton" class="btn btn-primary">Done</a><p>
 </div>
 {% endblock %}
 
@@ -159,7 +159,18 @@ $(document).ready(function(){
         '</tr>';
     	$("table").append(row);		
 		$("table tbody tr").eq(index + 1).find(".add, .edit").toggle();
+        $("#doneButton").addClass("disabled")
     });
+
+    // Handle done button
+    $("doneButton").click(function (e) {
+        e.preventDefault();
+        if($(this).hasClass("disabled"))
+            return false;
+        else
+            window.location.href = $(this).attr("href");
+    });
+
 	// Add row on add button click
 	$(document).on("click", ".add", function(){
 		var empty = false;
@@ -187,6 +198,7 @@ $(document).ready(function(){
             $(this).parents("tr").find("td:nth-of-type(2)").html(sel)
 			$(this).parents("tr").find(".add, .edit").toggle();
 			$(".add-new").removeAttr("disabled");
+            $("#doneButton").removeClass("disabled");
 
             // New row
             if(id == "id")
@@ -234,6 +246,7 @@ $(document).ready(function(){
         }).prop('selected', true);
 		$(this).parents("tr").find(".add, .edit").toggle();
 		$(".add-new").attr("disabled", "disabled");
+        $("#doneButton").addClass("disabled");
     });
 	// Delete row on delete button click
 	$(document).on("click", ".delete", function(){
@@ -249,6 +262,7 @@ $(document).ready(function(){
 
         $(this).parents("tr").remove();
 		$(".add-new").removeAttr("disabled");
+        $("#doneButton").removeClass("disabled");
     });
 });
 </script>
