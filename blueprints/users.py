@@ -5,8 +5,8 @@ from model.user import get_all_users, get_user_by_id, delete_user_by_id
 users = Blueprint("users", __name__)
 
 
-@login_required
 @users.route("/users")
+@login_required
 def list_users():
     # only superuser can list all users
     if not current_user.superuser:
@@ -15,8 +15,8 @@ def list_users():
     return render_template("users/list.html", users=get_all_users())
 
 
-@login_required
 @users.route("/user/<int:user_id>")
+@login_required
 def detail(user_id):
     # only superuser can view other users
     if not current_user.superuser and user_id != current_user.id:
@@ -26,9 +26,8 @@ def detail(user_id):
         "users/detail.html", current_user=current_user, user=get_user_by_id(user_id)
     )
 
-
-@login_required
 @users.route("/user/<int:user_id>", methods=["DELETE"])
+@login_required
 def delete(user_id):
     # only superuser can delete other users
     if not current_user.superuser and user_id != current_user.id:

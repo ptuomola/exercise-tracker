@@ -23,8 +23,9 @@ activities = Blueprint("activities", __name__)
 activity_types = [(1, "Distance"), (2, "Stationary")]
 
 
-@login_required
+
 @activities.route("/activities")
+@login_required
 def list_activities():
     # only superuser can view / modify activities
     if not current_user.superuser:
@@ -48,8 +49,9 @@ class CreateActivityForm(FlaskForm):
             raise ValidationError("Activity already exists")
 
 
-@login_required
+
 @activities.route("/activity")
+@login_required
 def activity():
     # only superuser can view / modify activities
     if not current_user.superuser:
@@ -83,8 +85,9 @@ def activity_post():
     )
 
 
-@login_required
+
 @activities.route("/activity/<int:activity_id>")
+@login_required
 def detail(activity_id):
     # only superuser can view / modify activities
     if not current_user.superuser:
@@ -110,8 +113,9 @@ class UpdateActivityForm(FlaskForm):
             raise ValidationError("Activity already exists")
 
 
-@login_required
+
 @activities.route("/activity/<int:activity_id>/edit")
+@login_required
 def edit_activity(activity_id):
     # only superuser can view / modify activities
     if not current_user.superuser:
@@ -177,8 +181,9 @@ class CreateSubactivityForm(FlaskForm):
     cancel = SubmitField(label="Cancel", render_kw={"formnovalidate": True})
 
 
-@login_required
+
 @activities.route("/activity/<int:_activity_id>/subactivity")
+@login_required
 def subactivity(_activity_id):
     # only superuser can view / modify subactivities
     if not current_user.superuser:
@@ -214,8 +219,9 @@ class UpdateSubactivityForm(FlaskForm):
     cancel = SubmitField(label="Cancel", render_kw={"formnovalidate": True})
 
 
-@login_required
+
 @activities.route("/activity/<int:activity_id>/subactivity/<int:subactivity_id>/edit")
+@login_required
 def edit_subactivity(activity_id, subactivity_id):
     # only superuser can view / modify activities
     if not current_user.superuser:

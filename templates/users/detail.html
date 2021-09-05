@@ -28,7 +28,7 @@ function confirmDelete(userId, currentUserId) {
     if(userId == currentUserId && !confirm("Are you sure you want to delete your own account?\nThis operation CANNOT be reversed and you will be logged out"))
         return;
 
-    if (!confirm("Are you sure you want to delete this user?\nThis operation CANNOT be reversed"))
+    if (!confirm("Please confirm: Are you sure you want to delete this user?\nThis operation CANNOT be reversed"))
         return;
 
     var xhr = new XMLHttpRequest();
@@ -37,7 +37,10 @@ function confirmDelete(userId, currentUserId) {
 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            window.location.replace("/users")
+            if(userId == currentUserId) 
+                window.location.replace("/logout")
+            else
+                window.location.replace("/users")
         }
     }
 

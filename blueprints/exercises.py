@@ -71,6 +71,7 @@ class ExerciseForm(FlaskForm):
 
 
 @exercises.route("/exercise")
+@login_required
 def exercise():
     form = ExerciseForm()
     form.activity_id.choices = get_all_activities_as_tuples()
@@ -83,6 +84,7 @@ def exercise():
 
 
 @exercises.route("/exercise", methods=["POST"])
+@login_required
 def exercise_post():
     form = ExerciseForm(request.form)
     form.activity_id.choices = get_all_activities_as_tuples()
@@ -114,8 +116,8 @@ def exercise_post():
     return redirect(url_for("exercises.list_exercises", user_id=current_user.id))
 
 
-@login_required
 @exercises.route("/exercise/<int:exercise_id>")
+@login_required
 def detail(exercise_id):
     this_exercise = get_exercise_by_id(exercise_id)
 
@@ -130,8 +132,8 @@ def detail(exercise_id):
     )
 
 
-@login_required
 @exercises.route("/exercise/<int:exercise_id>", methods=["DELETE"])
+@login_required
 def delete(exercise_id):
     this_exercise = get_exercise_by_id(exercise_id)
 
@@ -171,8 +173,8 @@ class UpdateExerciseForm(FlaskForm):
             raise ValidationError("Exercise cannot end before it starts")
 
 
-@login_required
 @exercises.route("/exercise/<int:exercise_id>/edit")
+@login_required
 def edit_exercise(exercise_id):
     this_exercise = get_exercise_by_id(exercise_id)
     form = UpdateExerciseForm()
@@ -196,8 +198,9 @@ def edit_exercise(exercise_id):
     )
 
 
-@login_required
+
 @exercises.route("/exercise/<int:exercise_id>/edit", methods=["POST"])
+@login_required
 def edit_exercise_post(exercise_id):
     form = UpdateExerciseForm(request.form)
 
@@ -231,8 +234,9 @@ def edit_exercise_post(exercise_id):
     return redirect(url_for("exercises.detail", exercise_id=exercise_id))
 
 
-@login_required
+
 @exercises.route("/exercise/<int:exercise_id>/subactivities")
+@login_required
 def subactivities(exercise_id):
     this_exercise = get_exercise_by_id(exercise_id)
 
@@ -251,8 +255,9 @@ def subactivities(exercise_id):
     )
 
 
-@login_required
+
 @exercises.route("/exercise/<int:exercise_id>/subactivity", methods=["POST"])
+@login_required
 def post_subactivity(exercise_id):
     this_exercise = get_exercise_by_id(exercise_id)
 
@@ -267,10 +272,11 @@ def post_subactivity(exercise_id):
     )
 
 
-@login_required
+
 @exercises.route(
     "/exercise/<int:exercise_id>/subactivity/<int:subactivity_id>", methods=["DELETE"]
 )
+@login_required
 def delete_subactivity(exercise_id, subactivity_id):
     this_exercise = get_exercise_by_id(exercise_id)
 
@@ -288,10 +294,11 @@ def delete_subactivity(exercise_id, subactivity_id):
     return "OK"
 
 
-@login_required
+
 @exercises.route(
     "/exercise/<int:exercise_id>/subactivity/<int:subactivity_id>", methods=["PUT"]
 )
+@login_required
 def update_subactivity(exercise_id, subactivity_id):
     this_exercise = get_exercise_by_id(exercise_id)
 
