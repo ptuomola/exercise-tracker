@@ -42,7 +42,7 @@
     <div class="pt-2">        
         <a href="/exercise/{{ exercise.id }}/edit" class="btn btn-secondary">Edit exercise</a>
         <button class="btn btn-danger" onclick="confirmDelete({{ exercise.id }})">Delete</button>
-        <a href="/exercises/{{ current_user.id }}" class="btn btn-primary">Back to list</a>
+        <a href="/exercises/{{ exercise.user_id }}" class="btn btn-primary">Back to list</a>
     </div>
 </div>
 
@@ -58,7 +58,7 @@ function confirmDelete(exerciseId) {
 
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            window.location.replace("/exercises/{{ current_user.id }}")
+            window.location.replace("/exercises/{{ exercise.user_id }}")
         }
     }
 
