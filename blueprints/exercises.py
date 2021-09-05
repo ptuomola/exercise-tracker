@@ -44,9 +44,16 @@ class ExerciseForm(FlaskForm):
     submit = SubmitField("Record exercise")
     cancel = SubmitField(label="Cancel", render_kw={"formnovalidate": True})
 
+    def validate_start_date(form, _field):
+        if form.start_date.data > date.today():
+            raise ValidationError("Start date cannot be in the future")
+
     def validate_end_date(form, _field):
         if form.end_date.data < form.start_date.data:
             raise ValidationError("End date cannot be before start date")
+
+        if form.end_date.data > date.today():
+            raise ValidationError("End date cannot be in the future")
 
     def validate_end_time(form, _field):
         if (form.end_date.data == form.start_date.data) and (
@@ -138,15 +145,24 @@ class UpdateExerciseForm(FlaskForm):
     submit = SubmitField("Update exercise")
     cancel = SubmitField(label="Cancel", render_kw={"formnovalidate": True})
 
+    def validate_start_date(form, _field):
+        if form.start_date.data > date.today():
+            raise ValidationError("Start date cannot be in the future")
+
     def validate_end_date(form, _field):
         if form.end_date.data < form.start_date.data:
             raise ValidationError("End date cannot be before start date")
+
+        if form.end_date.data > date.today():
+            raise ValidationError("End date cannot be in the future")
+
 
     def validate_end_time(form, _field):
         if (form.end_date.data == form.start_date.data) and (
             form.end_time.data < form.start_time.data
         ):
             raise ValidationError("Exercise cannot end before it starts")
+        
 
 
 @login_required
@@ -189,7 +205,7 @@ def edit_exercise_post(exercise_id):
             "exercises/edit.html",
             form=form,
             exercise=this_exercise,
-            activity=get_activity_by_id(exercise.activity_id),
+            activity=get_activity_by_id(this_exercise.activity_id),
         )
 
     # only superuser can view / modify activities

@@ -106,7 +106,7 @@ class UpdateActivityForm(FlaskForm):
 
     def validate_description(form, field):
         other_activity = get_activity_by_description(field.data)
-        if form.activity_id.data != str(other_activity.id):
+        if other_activity and form.activity_id.data != str(other_activity.id):
             raise ValidationError("Activity already exists")
 
 
